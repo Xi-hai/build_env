@@ -120,3 +120,28 @@ notebook         : 7.1.2
 qtconsole        : 5.5.1
 traitlets        : 5.14.2
 ```
+
+## TeX
+[brew-cask](https://github.com/Homebrew/homebrew-cask)を使うためにAlfredをインストールする．
+```shell-session
+% brew install alfred
+...(略)...
+🍺  alfred was successfully installed!
+```
+MacTeXをGUIなしでインストールする．
+```shell-session
+% brew install --cask mactex-no-gui
+```
+ダウンロードが終わるとパスワードを要求されるので入力する．
+入力が終わっても画面は変化しないが，インストールが始まっているのでそのまま待ちましょう．
+
+最新版へのアップデートと用紙サイズの設定をしておく．
+```shell-session
+% sudo tlmgr update --self --all
+% sudo tlmgr paper a4
+```
+これもパスワードを要求される．
+
+次に，Visual Studio Codeをインストールして開き，拡張機能のLaTeX Workshopをインストールする．
+[ゼロからVSCodeでTeX環境構築（Mac Big Sur）](https://zenn.dev/thor/articles/732c3e007f77ee)を参考に，ビルドレシピを設定する．
+[TeX Wiki LaTeX入門/最初の例](https://texwiki.texjp.org/?LaTeX入門%2F最初の例)など，適当なTeXファイルをコンパイルできれば成功．
