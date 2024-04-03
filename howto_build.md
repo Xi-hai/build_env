@@ -122,18 +122,20 @@ traitlets        : 5.14.2
 ```
 
 ## TeX
-[brew-cask](https://github.com/Homebrew/homebrew-cask)を使うためにAlfredをインストールする．
+[brew-cask](https://github.com/Homebrew/homebrew-cask)を使うために，公式の説明に従いAlfredをインストールする．
 ```zsh
 % brew install alfred
 ...(略)...
 🍺  alfred was successfully installed!
 ```
-MacTeXをGUIなしでインストールする．
+MacTeXをCLIとしてインストールする．
 ```zsh
 % brew install --cask mactex-no-gui
 ```
-ダウンロードが終わるとパスワードを要求されるので入力する．
-入力が終わっても画面は変化しないが，インストールが始まっているのでそのまま待ちましょう．
+ダウンロードが終わるとパスワードを要求される場合がある．
+入力するとターミナルが固まったように見えるけど，インストールが始まっているので
+`🍺  mactex-no-gui was successfully installed!`
+が出るまで待ちましょう．
 
 最新版へのアップデートと用紙サイズの設定をしておく．
 ```zsh
