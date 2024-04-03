@@ -1,5 +1,5 @@
 ## Homebrew
-Launchpad > その他 > ターミナルを起動し，適当なコマンド(例えば`git -v`)を実行する．
+Launchpad > その他 > ターミナルを起動し，適当なコマンド(例えば`echo $PATH`や`git -v`)を実行する．
 
 コマンドライン・デベロッパ・ツールのポップアップウィンドウが出るので，インストールをクリックする．
 
@@ -23,8 +23,9 @@ Launchpad > その他 > ターミナルを起動し，適当なコマンド(例�
 ## Git
 `brew install git`を実行する．
 
-インストールが完了したら，`brew --prefix git`を実行してインストール先のパスを調べる．
-```powershell
+インストールが完了したら，インストール先のパスを調べる．
+```shell-session
+% brew --prefix git
 /opt/homebrew/opt/git
 ```
 得られたパスを環境変数に追加する．
@@ -33,4 +34,89 @@ Launchpad > その他 > ターミナルを起動し，適当なコマンド(例�
 % source ~/.zshrc
 ```
 
-`git -v`を実行し，バージョンの末尾に"(Apple Git ...)"などがついていないことを確認する．
+変更が反映されたか確認する．
+```shell
+% git -v
+git version 2.44.0
+```
+
+## Python
+xzおよびpyenvをインストールする．
+```powershell
+% brew install xz
+% brew install pyenv
+```
+インストールが完了したらパスを通す．
+```powershell
+% echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
+% echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
+% echo 'eval "$(pyenv init -)"' >> ~/.zshrc
+% source ~/.zshrc
+```
+パス変更が反映されたか確認する．
+先頭に以下のパスが追加されていればOK．
+```powershell
+% echo $PATH
+/Users/ユーザー名/.pyenv/shims:...
+```
+インストール可能なPythonのバージョンを調べる．
+```sh
+% pyenv install --list
+Available versions:
+(略)
+3.12-dev
+3.12.1
+3.12.2
+3.13.0a3
+3.13-dev
+(略)
+pypy3.10-7.3.15
+```
+基本的には最新版を入れれば良いが，デフォルトの最新版3.13.xxxはおそらくプレリリースなので，3.12.2を入れるのが良さそう．
+使いたいバージョンをインストールする．
+```sh
+% pyenv install 3.12.2
+% pyenv install pypy3.10-7.3.15
+```
+miniconda3はmacOSに対応していないようで，インストールできなかった．
+インストールできたか確認し，システム全体で使用するバージョンの指定を変更する．
+```shell-session
+% pyenv versions
+* system (set by /Users/ユーザー名/.pyenv/version)
+  3.12.2
+  pypy3.10-7.3.15
+% pyenv global 3.12.2
+% pyenv versions
+  system
+* 3.12.2 (set by /Users/ユーザー名/.pyenv/version)
+  pypy3.10-7.3.15
+```
+
+pipをインストールする．
+```shell-session
+% curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+% python get-pip.py
+% pip --version
+pip 24.0 from /Users/ユーザー名/.pyenv/versions/3.12.2/lib/python3.12/site-packag4es/pip (python 3.12)
+```
+
+## Jupyter
+pipをインストール後，pipを使ってJupyterをインストールする．
+```shell-session
+% pip install jupyter
+% jupyter --version
+Selected Jupyter core packages...
+IPython          : 8.23.0
+ipykernel        : 6.29.4
+ipywidgets       : 8.1.2
+jupyter_client   : 8.6.1
+jupyter_core     : 5.7.2
+jupyter_server   : 2.13.0
+jupyterlab       : 4.1.5
+nbclient         : 0.10.0
+nbconvert        : 7.16.3
+nbformat         : 5.10.3
+notebook         : 7.1.2
+qtconsole        : 5.5.1
+traitlets        : 5.14.2
+```
