@@ -18,6 +18,7 @@ Launchpad > その他 > ターミナルを起動し，適当なコマンド(例�
 `brew -v`を実行してバージョンが表示されることを確認する．
 
 ## Git
+### 1. 最新版Gitのインストール
 元からGit自体は入っているが，Apple向けのバージョンになっているため，Homebrewで最新版gitをインストールする．  
 完了したら，インストール先のパスを調べる．
 ```zsh
@@ -51,6 +52,57 @@ export PATH="/opt/homebrew/opt/git/bin:$PATH"
 % git -v
 git version 2.44.0
 ```
+
+### 2. Gitアカウントの設定
+Gitのアカウント情報を設定する．  
+ユーザ名はパブリックリポジトリに接続した場合に他のユーザに見えるので，見られても構わない名前にしておくと良いらしい．
+```zsh
+% git config --global user.name "HogeHoge"
+% git config --global user.email fuga@example.com
+```
+登録した情報を確認する．
+```zsh
+% git config --list --global
+user.name=HogeHoge
+user.email=fuga@example.com
+```
+
+### 3. GitHubへのSSH接続の設定
+すでにSSH鍵が存在するか調べる．
+```zsh
+% cat ~/.ssh/id_rsa.pub
+cat: /Users/{ユーザ}/.ssh/id_rsa.pub: No such file or directory
+```
+
+鍵が存在しない場合は新しく作成する．
+```zsh
+% ssh-keygen -t ed25519
+```
+ここでは`-t`オプションで暗号アルゴリズムとしてEd25519を指定している．
+デフォルトではRSAだが，Ed25519のほうがパフォーマンスとセキュリティに優れているらしく，GitHubのドキュメントのサンプルでもこれが使われている．  
+また，`-C "{comment}"`オプションで公開鍵の末尾に付与されるコメントを任意に設定できる．
+デフォルトではコマンド実行環境のusername@hostname（例えばhoge@foonoair）になる．
+
+鍵の保存先を入力するよう求められる．
+何も入力せずエンターキーを押すと，括弧内に示されたデフォルトの場所に保存される．  
+次にパスフレーズを入力するよう求められる．
+空白でもよい．
+
+秘密鍵と公開鍵がそれぞれ生成され，保存先やSHA256などが表示される．  
+公開鍵を使いたいので，以下のコマンドを実行するかテキストエディタ等で保存先ファイルを表示するなどして，クリップボードにコピーしておく．
+（~/.ssh/hoge.pubは公開鍵保存ファイルのパス．例えば ~/.ssh/id_ed25519.pub）
+```zsh
+% pbcopy < ~/.ssh/hoge.pub
+```
+
+[GitHubの公開鍵設定](https://github.com/settings/keys)を開く．  
+"New SSH key"をクリックし，"Key"の欄に公開鍵をペーストする．
+タイトルは適当につけておく．  
+"Add SSH key"で公開鍵を登録する．
+
+vimやFinderなどで~/.ssh/configを開き，接続設定を追加する．
+
+(2024.04.04 これ以降，手元で再現できなかったため後日追記予定)
 
 ## Python
 xzおよびpyenvをインストールする．
@@ -112,6 +164,8 @@ pipをインストールする．
 % pip --version
 pip 24.0 from /Users/{ユーザ}/.pyenv/versions/3.12.2/lib/python3.12/site-packag4es/pip (python 3.12)
 ```
+
+（2024.04.04 venvを用いた仮想環境の立て方を追記予定）
 
 ## Jupyter
 pipをインストール後，pipを使ってJupyterをインストールする．
