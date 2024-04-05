@@ -82,7 +82,7 @@ cat: /Users/{ユーザ}/.ssh/id_ed25519.pub: No such file or directory
 % ssh-keygen -t ed25519
 ```
 ここでは`-t`オプションで暗号アルゴリズムとしてEd25519を指定している．
-デフォルトではRSAだが，Ed25519のほうがパフォーマンスとセキュリティに優れているらしく，GitHubのドキュメントのサンプルでもこれが使われている．  
+デフォルトではRSAだが，Ed25519のほうがパフォーマンスとセキュリティに優れているらしく，[GitHub Docs](https://docs.github.com/ja/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#adding-your-ssh-key-to-the-ssh-agent)のサンプルでもこれが使われている．  
 また，`-C "{comment}"`オプションで公開鍵の末尾に付与されるコメントを任意に設定できる．
 デフォルトではコマンド実行環境のusername@hostname（例えばhoge@foonoair）になる．
 
