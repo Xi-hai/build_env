@@ -103,9 +103,21 @@ cat: /Users/{ユーザ}/.ssh/id_ed25519.pub: No such file or directory
 タイトルは適当につけておく．  
 "Add SSH key"で公開鍵を登録する．
 
-vimやFinderなどで~/.ssh/configを開き，接続設定を追加する．
-
-(2024.04.04 これ以降，手元で再現できなかったため後日追記予定)
+vimやFinderなどで~/.ssh/configを開き，以下の接続設定を追加して保存する．  
+IdentityFileには秘密鍵のファイルパス（公開鍵のファイルパスから末尾の".pub"を除けばよい）を指定する．
+```
+Host github.com
+	AddKeysToAgent yes
+	UseKeychain yes
+	IdentityFile ~/.ssh/id_ed25519
+```
+SSH接続できるか確認する．
+初回は確認メッセージが表示される場合があるが，"yes"で続行する．  
+"successfully"なら成功．
+```zsh
+% ssh -T git@github.com
+Hi {GitHubユーザ名}! You've successfully authenticated, but GitHub does not provide shell access.
+```
 
 ## Python
 xzおよびpyenvをインストールする．
