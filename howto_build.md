@@ -72,6 +72,8 @@ user.email=fuga@example.com
 ```zsh
 % cat ~/.ssh/id_rsa.pub
 cat: /Users/{ユーザ}/.ssh/id_rsa.pub: No such file or directory
+% cat ~/.ssh/id_ed25519.pub
+cat: /Users/{ユーザ}/.ssh/id_ed25519.pub: No such file or directory
 ```
 
 鍵が存在しない場合は新しく作成する．
