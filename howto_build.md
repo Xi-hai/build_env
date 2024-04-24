@@ -10,9 +10,9 @@ Launchpad > その他 > ターミナルを起動し，適当なコマンド(例�
 `Press RETURN/ENTER ...`と表示されたら，エンターキーを押してインストールを開始する．
 
 終了時にPATHに関するWarningが出るので，Next Stepsに書かれた2つのコマンドを実行する．  
-※`{ユーザ}`の箇所は各自異なるので注意！以下のコマンドをコピーするより，自分のターミナルに表示されたコマンドをコピーする方が確実．
+※`hogehoge`の箇所は各自異なるので注意！以下のコマンドをコピーするより，自分のターミナルに表示されたコマンドをコピーする方が確実．
 ```zsh
-%  (echo; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"') >> /Users/{ユーザ}/.zprofile
+%  (echo; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"') >> /Users/hogehoge/.zprofile
 %  eval "$(/opt/homebrew/bin/brew shellenv
 ```
 `brew -v`を実行してバージョンが表示されることを確認する．
@@ -70,13 +70,12 @@ user.email=fuga@example.com
 ```
 
 ### 3. GitHubへのSSH接続の設定
-HTTPS接続でも十分使えるので必ずしも設定する必要はないが，SSH接続の方が安全性などの点で良いとされている．
 すでにSSH鍵が存在するか調べる．
 ```zsh
 % cat ~/.ssh/id_rsa.pub
-cat: /Users/{ユーザ}/.ssh/id_rsa.pub: No such file or directory
+cat: /Users/hogehoge/.ssh/id_rsa.pub: No such file or directory
 % cat ~/.ssh/id_ed25519.pub
-cat: /Users/{ユーザ}/.ssh/id_ed25519.pub: No such file or directory
+cat: /Users/hogehoge/.ssh/id_ed25519.pub: No such file or directory
 ```
 
 鍵が存在しない場合は新しく作成する．
@@ -86,12 +85,12 @@ cat: /Users/{ユーザ}/.ssh/id_ed25519.pub: No such file or directory
 ここでは`-t`オプションで暗号アルゴリズムとしてEd25519を指定している．
 デフォルトではRSAだが，Ed25519のほうがパフォーマンスとセキュリティに優れているらしく，[GitHub Docs](https://docs.github.com/ja/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#adding-your-ssh-key-to-the-ssh-agent)のサンプルでもこれが使われている．  
 また，`-C "{comment}"`オプションで公開鍵の末尾に付与されるコメントを任意に設定できる．
-デフォルトではコマンド実行環境のusername@hostname（例えばhoge@foonoair）になる．
+デフォルトではコマンド実行環境のusername@hostname（例えばhogehoge@fuganoair）になる．
 
 鍵の保存先を入力するよう求められる．
 何も入力せずエンターキーを押すと，括弧内に示されたデフォルトの場所に保存される．  
 次にパスフレーズを入力するよう求められる．
-空白でもよい．
+何も入力せずエンターキーを押すと，パスフレーズを設定せずに続行する．
 
 秘密鍵と公開鍵がそれぞれ生成され，保存先やSHA256などが表示される．  
 公開鍵を使いたいので，以下のコマンドを実行するかテキストエディタ等で保存先ファイルを表示するなどして，クリップボードにコピーしておく．
@@ -102,7 +101,7 @@ cat: /Users/{ユーザ}/.ssh/id_ed25519.pub: No such file or directory
 
 [GitHubの公開鍵設定](https://github.com/settings/keys)を開く．  
 "New SSH key"をクリックし，"Key"の欄に公開鍵をペーストする．
-タイトルは適当につけておく．  
+タイトルは端末が区別できるものをつけるとよい（例えば"MacBook Air"など）．  
 "Add SSH key"で公開鍵を登録する．
 
 vimやFinderなどで~/.ssh/configを開き，以下の接続設定を追加して保存する．  
@@ -115,7 +114,7 @@ Host github.com
 ```
 SSH接続できるか確認する．
 初回は確認メッセージが表示される場合があるが，"yes"で続行する．  
-"successfully"なら成功．
+"successfully authenticated"なら成功．
 ```zsh
 % ssh -T git@github.com
 Hi {GitHubユーザ名}! You've successfully authenticated, but GitHub does not provide shell access.
@@ -123,6 +122,7 @@ Hi {GitHubユーザ名}! You've successfully authenticated, but GitHub does not 
 
 ## Python
 xzおよびpyenvをインストールする．
+xzは比較的新しいPythonバージョンをインストールするために必要．
 ```zsh
 % brew install xz
 % brew install pyenv
@@ -138,7 +138,7 @@ eval "$(pyenv init -)"
 ```zsh
 % source ~/.zshrc
 % echo $PATH
-/Users/{ユーザ}/.pyenv/shims:...
+/Users/hogehoge/.pyenv/shims:...
 ```
 インストール可能なPythonのバージョンを調べる．
 ```zsh
@@ -160,29 +160,29 @@ pypy3.10-7.3.15
 % pyenv install 3.12.2
 % pyenv install pypy3.10-7.3.15
 ```
-miniconda3は64bit-macOSに対応していないようで，インストールできなかった．  
+conda系は64bit-macOSに対応していないようで，インストールできなかった．  
 インストールできたか確認し，システム全体で使用するバージョンの指定を変更する．
 ```zsh
 % pyenv versions
-* system (set by /Users/{ユーザ}/.pyenv/version)
+* system (set by /Users/hogehoge/.pyenv/version)
   3.12.2
   pypy3.10-7.3.15
 % pyenv global 3.12.2
 % pyenv versions
   system
-* 3.12.2 (set by /Users/{ユーザ}/.pyenv/version)
+* 3.12.2 (set by /Users/hogehoge/.pyenv/version)
   pypy3.10-7.3.15
 ```
 
 pipをインストールする．
-pipはpythonの外部パッケージを管理するために使う．
+pipはpythonの外部ライブラリを管理するために使う．
 ```zsh
 % curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 % python get-pip.py
 % pip --version
-pip 24.0 from /Users/{ユーザ}/.pyenv/versions/3.12.2/lib/python3.12/site-packag4es/pip (python 3.12)
+pip 24.0 from /Users/hogehoge/.pyenv/versions/3.12.2/lib/python3.12/site-packag4es/pip (python 3.12)
 ```
-よく使うパッケージ（例えばnumpy, matplotlib, scikit-learn）はグローバルに入れておいてもよいだろう．
+よく使うライブラリ（例えばnumpy, matplotlib, seaborn, scikit-learn）はグローバルに入れておいてもよいだろう．
 ```zsh
 % pip install numpy
 ```
@@ -190,6 +190,7 @@ pip 24.0 from /Users/{ユーザ}/.pyenv/versions/3.12.2/lib/python3.12/site-pack
 仮想環境については[zennの記事](https://zenn.dev/sion_pn/articles/d0f9e45716cabb)を参照．
 
 ## Jupyter
+ローカルでpython notebookを実行したい人向け．
 pipをインストール後，pipを使ってJupyterをインストールする．
 ```zsh
 % pip install jupyter
